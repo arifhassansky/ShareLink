@@ -1,16 +1,30 @@
 require("dotenv").config();
 const express = require("express");
-const { MongoClient, ServerApiVersion } = require("mongodb");
+const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 const cors = require("cors");
+const multer = require("multer");
+const cloudinary = require("cloudinary").v2;
 const app = express();
 const port = process.env.PORT || 3000;
 
-// middlewares
+// Middleware
 app.use(express.json());
 app.use(cors());
 
+// Cloudinary Configuration
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
+
+// Multer setup for handling file uploads
+const storage = multer.memoryStorage();
+const upload = multer({ storage });
+
+// MongoDB Setup
 const uri = `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@cluster0.koweo.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
-// Create a MongoClient with a MongoClientOptions object to set the Stable API version
+
 const client = new MongoClient(uri, {
   serverApi: {
     version: ServerApiVersion.v1,
@@ -21,11 +35,11 @@ const client = new MongoClient(uri, {
 
 async function run() {
   try {
-    // Connect the client to the server	(optional starting in v4.7)
-    // await client.connect();
     const usersCollection = client.db("ShareLink").collection("users");
+    // const filesCollection = client.db("ShareLink").collection("files");
+    const linksCollection = client.db("ShareLink").collection("links");
 
-    // send user data to the database
+    // Store User Data
     app.post("/users", async (req, res) => {
       const userEmail = req.body.email;
       const user = await usersCollection.findOne({ email: userEmail });
@@ -37,22 +51,31 @@ async function run() {
       const result = await usersCollection.insertOne(userData);
       res.send(result);
     });
-    // Send a ping to confirm a successful connection
-    // await client.db("admin").command({ ping: 1 });
-    console.log(
-      "Pinged your deployment. You successfully connected to MongoDB!"
-    );
-  } finally {
-    // Ensures that the client will close when you finish/error
-    // await client.close();
+
+    // Create Shareable Link (New Route)
+    app.post("/create-link", async (req, res) => {
+      const linkData = req.body;
+      const insertResult = await linksCollection.insertOne(linkData);
+      const id = insertResult.insertedId;
+
+      const result = await linksCollection.findOne({ _id: new ObjectId(id) });
+      res.send(result);
+    });
+
+    // Mongodb use case
+    console.log("Connected to MongoDB!");
+  } catch (error) {
+    console.error("MongoDB Connection Error:", error);
   }
 }
+
 run().catch(console.dir);
 
+// Default Route
 app.get("/", (req, res) => {
-  res.send("ShareLink is running!");
+  res.send("ShareLink is running with Cloudinary integration!");
 });
 
 app.listen(port, () => {
-  console.log(`ShareLink listening on PORT: ${port}`);
+  console.log(`Server listening on PORT: ${port}`);
 });

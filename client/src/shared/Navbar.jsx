@@ -1,5 +1,5 @@
 import { useState, useContext } from "react";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import authContext from "../context/AuthContext";
 
 const Navbar = () => {
@@ -11,11 +11,11 @@ const Navbar = () => {
   };
 
   return (
-    <div className="bg-gray-100 py-4">
+    <div className="bg-blue-100 py-4">
       <div className="w-9/12 mx-auto flex items-center justify-between">
-        <h3 className="text-blue-500 font-bold text-2xl">
+        <Link to="/" className="text-blue-500 font-bold text-2xl">
           Share<span className="text-green-600">Link</span>
-        </h3>
+        </Link>
 
         <div className="relative">
           {user ? (
@@ -28,7 +28,7 @@ const Navbar = () => {
                   src={user.photoURL}
                   alt="Profile"
                   referrerPolicy="no-referrer"
-                  className="w-8 h-8 rounded-full cursor-pointer"
+                  className="w-10 h-10 rounded-full cursor-pointer"
                 />
               </button>
 

@@ -7,7 +7,7 @@ import {
   signInWithPopup,
   signOut,
 } from "firebase/auth";
-import auth from "../firebase/firebase.config";
+import { auth } from "../firebase/firebase.config";
 
 const AuthProvider = ({ children }) => {
   const provider = new GoogleAuthProvider();
