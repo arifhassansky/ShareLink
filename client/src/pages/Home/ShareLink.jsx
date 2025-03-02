@@ -71,7 +71,7 @@ const DisplayLinks = () => {
         All Shared Links
       </h2>
 
-      <div className="space-y-6 grid grid-cols-2 lg:grid-cols-4 gap-8">
+      <div className="space-y-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
         {links.length === 0 ? (
           <p className="text-center text-gray-500">No links available.</p>
         ) : (
@@ -89,7 +89,9 @@ const DisplayLinks = () => {
                 </span>
               </div>
               <div className="flex flex-col items-center justify-between grow-1">
-                <p className="text-sm text-gray-600 mt-2">{link.content}</p>
+                <p className="text-sm text-gray-600 mt-2">
+                  {link.content ? link.content : "Image / Video"}
+                </p>
               </div>
               <div className="flex justify-center mt-2">
                 <button

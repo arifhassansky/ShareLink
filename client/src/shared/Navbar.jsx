@@ -43,9 +43,20 @@ const Navbar = () => {
                     </p>
                   </div>
 
+                  <div className="px-2 mb-2">
+                    <Link
+                      to="/create-link"
+                      onClick={() => setProfileOpen(false)}
+                      className="px-11 py-1 text-green-600 font-medium hover:text-white rounded hover:bg-green-600 ho cursor-pointer"
+                    >
+                      Create Link
+                    </Link>
+                  </div>
+
                   <div className="px-2">
                     <Link
                       to="/my-links"
+                      onClick={() => setProfileOpen(false)}
                       className="px-7 py-1 text-green-600 font-medium hover:text-white rounded hover:bg-green-600 ho cursor-pointer"
                     >
                       My Shared Links
@@ -68,7 +79,7 @@ const Navbar = () => {
               to="/login"
               className="text-blue-500 text-lg font-semibold"
             >
-              Login
+              Login / Register
             </NavLink>
           )}
         </div>

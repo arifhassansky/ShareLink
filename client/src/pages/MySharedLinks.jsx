@@ -115,7 +115,7 @@ const MySharedLinks = () => {
   };
 
   return (
-    <div className="max-9/12 mx-auto p-6 bg-white">
+    <div className="w-9/12 mx-auto bg-white">
       <div className="text-center mt-6">
         <h2 className="text-3xl font-bold text-blue-600">Your Shared Links</h2>
         <p className="text-gray-600 mb-6 mt-2">
@@ -125,16 +125,16 @@ const MySharedLinks = () => {
       </div>
 
       {/* Links List */}
-      <div className="space-y-3 grid grid-cols-2 md:grid-cols-3 gap-8 ">
+      <div className="space-y-3 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-8">
         {links?.map((link) => (
           <div
             key={link._id}
-            className="flex items-center relative p-4 rounded-lg shadow-md h-60 bg-gradient-to-r from-green-100 to-blue-100"
+            className="flex items-center relative p-4 rounded-lg shadow-md h-64 bg-gradient-to-r from-green-100 to-blue-100"
           >
             <div className="w-full max-w-lg p-4 rounded-lg">
               <div className="flex justify-between items-center">
                 {link.content ? (
-                  <p className="text-gray-600 mt-2">
+                  <p className="text-gray-600 mt-8 lg:mt-2">
                     <strong>Shared Content:</strong> {link.content}
                   </p>
                 ) : (
@@ -149,7 +149,7 @@ const MySharedLinks = () => {
                 )}
 
                 {/* action buttons */}
-                <div className="flex gap-2 mt-4 absolute top-0 right-4">
+                <div className="flex gap-2 mt-4 absolute -top-2 right-4">
                   <button
                     onClick={() => openEditModal(link)}
                     className="text-green-500 cursor-pointer"
@@ -173,7 +173,7 @@ const MySharedLinks = () => {
               </p>
               <p className="text-gray-600 mt-2">
                 <strong>Link: </strong>
-                <span className="whitespace-normal break-words">
+                <span className="whitespace-normal break-words text-blue-600">
                   {link.fileUrl} {link.textUrl}
                 </span>
               </p>
@@ -185,7 +185,7 @@ const MySharedLinks = () => {
       {/* Modal for Editing */}
       {showModal && (
         <div className="fixed inset-0 bg-opacity-50 flex justify-center items-center z-50">
-          <div className="bg-white p-6 rounded-lg shadow-lg w-md">
+          <div className="bg-white p-6 rounded-lg shadow-lg w-[70%] md:w-md">
             <h3 className="text-xl font-semibold mb-4 text-center">
               Edit Shared Link
             </h3>

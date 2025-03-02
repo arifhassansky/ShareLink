@@ -166,11 +166,12 @@ const CreateLink = () => {
         {isPrivate && (
           <div className="mb-4">
             <label htmlFor="password" className="text-gray-600">
-              Password
+              Password*
             </label>
             <input
               type="password"
               id="password"
+              required
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className="w-full p-3 border border-gray-300 rounded-lg"
