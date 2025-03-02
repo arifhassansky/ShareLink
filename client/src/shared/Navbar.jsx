@@ -43,10 +43,19 @@ const Navbar = () => {
                     </p>
                   </div>
 
+                  <div className="px-2">
+                    <Link
+                      to="/my-links"
+                      className="px-7 py-1 text-green-600 font-medium hover:text-white rounded hover:bg-green-600 ho cursor-pointer"
+                    >
+                      My Shared Links
+                    </Link>
+                  </div>
+
                   <div className="px-2 py-4">
                     <button
                       onClick={handleLogout}
-                      className="w-full py-2 text-white rounded bg-green-600 cursor-pointer"
+                      className="w-full py-1 text-white rounded bg-green-600 cursor-pointer"
                     >
                       Logout
                     </button>

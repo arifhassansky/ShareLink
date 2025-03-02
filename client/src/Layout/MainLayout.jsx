@@ -7,7 +7,9 @@ const MainLayout = () => {
   return (
     <div>
       <Navbar />
-      <Outlet />
+      <div className="min-h-[82vh]">
+        <Outlet />
+      </div>
       <Footer />
       <ToastContainer autoClose={2000} />
     </div>

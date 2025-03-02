@@ -3,6 +3,8 @@ import MainLayout from "../Layout/MainLayout";
 import Login from "../pages/Login";
 import CreateLink from "../pages/CreateLink";
 import Home from "../pages/Home/Home";
+import MySharedLinks from "../pages/MySharedLinks";
+import LinkDetails from "../pages/LinkDetails";
 
 const router = createBrowserRouter([
   {
@@ -20,6 +22,14 @@ const router = createBrowserRouter([
       {
         path: "/create-link",
         element: <CreateLink />,
+      },
+      {
+        path: "/my-links",
+        element: <MySharedLinks />,
+      },
+      {
+        path: "/link-details/:id",
+        element: <LinkDetails />,
       },
     ],
   },

@@ -18,6 +18,7 @@ const CreateLink = () => {
   } = useForm();
   const [file, setFile] = useState(null);
   const [isPrivate, setIsPrivate] = useState(false);
+  const [password, setPassword] = useState(""); // Store password
   const [isLoading, setIsLoading] = useState(false);
   const [link, setLink] = useState("");
 
@@ -102,6 +103,7 @@ const CreateLink = () => {
         expirationDate: data.expirationDate,
         fileUrl,
         textUrl,
+        password: isPrivate ? password : "", // Save password only if private
       };
 
       const response = await axiosPublic.post("/create-link", linkData);
@@ -111,6 +113,7 @@ const CreateLink = () => {
       reset();
       setFile(null);
       setIsPrivate(false);
+      setPassword(""); // Reset password field
     } catch (error) {
       toast.error("Error creating link.");
       console.error(error);
@@ -158,6 +161,22 @@ const CreateLink = () => {
             className="text-blue-500"
           />
         </div>
+
+        {/* Password Field (shown if private) */}
+        {isPrivate && (
+          <div className="mb-4">
+            <label htmlFor="password" className="text-gray-600">
+              Password
+            </label>
+            <input
+              type="password"
+              id="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="w-full p-3 border border-gray-300 rounded-lg"
+            />
+          </div>
+        )}
 
         {/* Expiration Date */}
         <div className="mb-4">
