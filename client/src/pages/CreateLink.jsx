@@ -1,11 +1,14 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import useAxiosPublic from "../hooks/useAxiosPublic";
 import axios from "axios";
+import authContext from "../context/AuthContext";
 
 const CreateLink = () => {
   const axiosPublic = useAxiosPublic();
+  const { user } = useContext(authContext);
+  console.log(user?.email);
 
   const {
     register,
@@ -25,30 +28,40 @@ const CreateLink = () => {
   const uploadTextToCloudinary = async (text) => {
     const formData = new FormData();
     formData.append("file", new Blob([text], { type: "text/plain" }));
-    formData.append("upload_preset", "ShareLink");
-    formData.append("cloud_name", "dl1zmxord");
+    formData.append(
+      "upload_preset",
+      `${import.meta.env.VITE_CLOUDINARY_PRESET}`
+    );
+    formData.append("cloud_name", `${import.meta.env.VITE_CLOUDINARY_NAME}`);
 
     const response = await axios.post(
-      "https://api.cloudinary.com/v1_1/dl1zmxord/upload",
+      `https://api.cloudinary.com/v1_1/${
+        import.meta.env.VITE_CLOUDINARY_NAME
+      }/upload`,
       formData
     );
 
-    return response.data.secure_url;
+    return response?.data?.url;
   };
 
   // Upload file to Cloudinary
   const uploadToCloudinary = async (file) => {
     const formData = new FormData();
     formData.append("file", file);
-    formData.append("upload_preset", "ShareLink");
-    formData.append("cloud_name", "dl1zmxord");
+    formData.append(
+      "upload_preset",
+      `${import.meta.env.VITE_CLOUDINARY_PRESET}`
+    );
+    formData.append("cloud_name", `${import.meta.env.VITE_CLOUDINARY_NAME}`);
 
     const response = await axios.post(
-      "https://api.cloudinary.com/v1_1/dl1zmxord/upload",
+      `https://api.cloudinary.com/v1_1/${
+        import.meta.env.VITE_CLOUDINARY_NAME
+      }/upload`,
       formData
     );
-    console.log(response.data);
-    return response.data.secure_url;
+
+    return response?.data?.url;
   };
 
   // Handle submit
@@ -83,6 +96,7 @@ const CreateLink = () => {
     try {
       // Send data to the backend
       const linkData = {
+        email: user?.email,
         content: data.content,
         isPrivate,
         expirationDate: data.expirationDate,
@@ -91,8 +105,8 @@ const CreateLink = () => {
       };
 
       const response = await axiosPublic.post("/create-link", linkData);
-      console.log(response.data.textUrl);
-      setLink(response.data.textUrl || response.data.url);
+      console.log(response.data.fileUrl);
+      setLink(response?.data?.textUrl || response?.data?.fileUrl);
       toast.success("Link created successfully!");
       reset();
       setFile(null);

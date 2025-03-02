@@ -62,6 +62,16 @@ async function run() {
       res.send(result);
     });
 
+    // Fetch All Links
+    app.get("/links", async (req, res) => {
+      try {
+        const links = await linksCollection.find().toArray();
+        res.send(links);
+      } catch (error) {
+        res.status(500).send({ message: "Error fetching links", error });
+      }
+    });
+
     // Mongodb use case
     console.log("Connected to MongoDB!");
   } catch (error) {

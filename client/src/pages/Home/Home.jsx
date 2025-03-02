@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import ShareLink from "./ShareLink";
 const Home = () => {
   return (
     <div className="bg-gradient-to-r from-teal-500 to-cyan-500 flex flex-col justify-center items-center">
@@ -53,6 +54,9 @@ const Home = () => {
           </div>
         </div>
       </section>
+
+      {/*  Shared Links */}
+      <ShareLink />
     </div>
   );
 };
